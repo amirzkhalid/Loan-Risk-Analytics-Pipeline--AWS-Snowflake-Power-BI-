@@ -71,6 +71,8 @@ Data Source → AWS S3 → Snowflake → Data Transformation → Power BI
 - Average loan amount amount
 - Default rate by year
 
+![page_1](https://github.com/amirzkhalid/Loan-Risk-Analytics-Pipeline--AWS-Snowflake-Power-BI-/blob/b7bfef41d204aa6f28e5f463b55be61c027a6247/Screenshot%202026-08-10%20155024.png)
+
 ### 2. Demographics Analysis
 - Median Loan Amount by Credit Score Category
 - Average Loan Amount (High Credit) by Age Groups and Marital Status
