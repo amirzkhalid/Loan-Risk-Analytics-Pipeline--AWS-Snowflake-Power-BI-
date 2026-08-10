@@ -56,7 +56,10 @@ It is structured as a **single denormalized table** for analytical purposes.
 | HasCoSigner       | Indicates if borrower has a co-signer |
 | Default           | Loan default status (Yes/No) |
 | LoanDate          | Date when loan was issued |
-
+| Age Groups (Created) | <19 "Teen", <=39 "Adults", <=59 "Middle Age Adults", "Senior Citizens" |
+| Credit Scores Bins (Created) | Credit Score, <=400 "Very Low", <=450 "Low", <=650 "Medium", "High" |
+| Income Bracket (Created) | Income, <30000 "Low Income", <60000 "Medium Income", >=60000 "High Income" |
+| Year (Created) | Year of Loan was issued |
 ---
 
 ## 🔄 Data Pipeline
