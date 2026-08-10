@@ -47,16 +47,50 @@ Data Source → AWS S3 → Snowflake → Data Transformation → Power BI
 - Cleaned missing values
 - Created derived features:
   - Age Groups
-  - Credit Score Categories
+  - Credit Score Bins
   - Income Brackets
 
-### 4. Data Modeling
-- Built table relationships
-- Optimized schema for analysis
+### 4. Centralized Data Layer (Power BI Dataflow)
+- Connected Snowflake to Dataflow
+- Applied Power Query transformations
+- Ensured consistent dataset across reports
+- Established **Single Source of Truth (SSOT)**
 
 ### 5. Dashboard Development
-- Connected Snowflake to Power BI
+- Import data from Dataflow to Power BI Desktop
 - Built interactive dashboards
+
+---
+
+## 📊 Dashboard Features
+
+### 1. Loan Default & Overview
+- Loan amount by purpose
+- Default rate by employment type
+- Average income comparison
+- Average loan amount amount
+- Default rate by year
+
+### 2. Demographics Analysis
+- Median Loan Amount by Credit Score Category
+- Average Loan Amount (High Credit) by Age Groups and Marital Status
+- Total Loan (Adults) by Credit Score Bins
+- Loan (Middle Age Adults) by Have Mortgage/Dependents
+- Number of Loans by Education Type
+
+### 3. Risk Metrics
+- YOY Loan Amount Change by Year
+- YOY Default Loan Change by Year
+- YTD Loan Amount Change by Credit Score and Marital Status
+- Decomposition Tree of Loan Amount
+
+---
+
+## 📈 Key Insights
+- Unemployed individuals have the highest default rate
+- Full-time employees show lower risk
+- Adults take the highest loan amounts
+- Default trends fluctuate over time
 
 ---
 
