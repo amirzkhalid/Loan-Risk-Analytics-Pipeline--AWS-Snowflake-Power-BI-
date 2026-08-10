@@ -33,6 +33,32 @@ Data Source → AWS S3 → Snowflake → Data Transformation → Power BI
 
 ---
 
+## 📊 Data Description
+
+The dataset contains information about loan applicants, including their financial background, loan details, and repayment behavior.
+
+It is structured as a **single denormalized table** for analytical purposes.
+
+### 📁 Dataset Features
+
+| Column Name        | Description |
+|-------------------|------------|
+| NumCreditLines    | Total number of active credit lines (credit cards, loans) |
+| InterestRate      | Annual percentage rate (APR) charged on the loan |
+| LoanTerm          | Loan duration in months |
+| DTIRatio          | Debt-to-Income ratio indicating financial stress level |
+| Education         | Highest education level attained |
+| EmploymentType    | Employment status (Full-Time, Part-Time, Self-Employed, etc.) |
+| MaritalStatus     | Borrower’s marital status |
+| HasMortgage       | Indicates if borrower has an existing mortgage |
+| HasDependents     | Indicates if borrower has dependents |
+| LoanPurpose       | Purpose of the loan |
+| HasCoSigner       | Indicates if borrower has a co-signer |
+| Default           | Loan default status (Yes/No) |
+| LoanDate          | Date when loan was issued |
+
+---
+
 ## 🔄 Data Pipeline
 
 ### 1. Data Ingestion
