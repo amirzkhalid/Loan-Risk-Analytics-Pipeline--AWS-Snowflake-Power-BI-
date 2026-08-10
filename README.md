@@ -88,7 +88,8 @@ Data Source → AWS S3 → Snowflake → Data Transformation → Power BI
 - YTD Loan Amount Change by Credit Score and Marital Status
 - Decomposition Tree of Loan Amount
 
-![page_3]()
+![page_3](https://github.com/amirzkhalid/Loan-Risk-Analytics-Pipeline--AWS-Snowflake-Power-BI-/blob/69ac27979593c164f27ea5a3b6572de4cfaa9985/Screenshot%202026-08-10%20160317.png)
+
 ---
 
 ## 📈 Key Insights
