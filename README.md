@@ -80,12 +80,15 @@ Data Source → AWS S3 → Snowflake → Data Transformation → Power BI
 - Loan (Middle Age Adults) by Have Mortgage/Dependents
 - Number of Loans by Education Type
 
+![page_2](https://github.com/amirzkhalid/Loan-Risk-Analytics-Pipeline--AWS-Snowflake-Power-BI-/blob/1eb8f13443a4d9e9c25521e8f32b1558a55e82fc/Screenshot%202026-08-10%20160108.png)
+
 ### 3. Risk Metrics
 - YOY Loan Amount Change by Year
 - YOY Default Loan Change by Year
 - YTD Loan Amount Change by Credit Score and Marital Status
 - Decomposition Tree of Loan Amount
 
+![page_3]()
 ---
 
 ## 📈 Key Insights
