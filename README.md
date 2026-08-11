@@ -239,6 +239,8 @@ It is structured as a **single denormalized table** for analytical purposes.
 
 As A result: There is no any duplicates row and null values
 
+
+
 Numerical and Date Inconsistency Checkin Result
 | Column Name        | Minimum | Maximum |
 |-------------------|------------|------------|
@@ -265,7 +267,33 @@ Categorical Inconsistency Checking Result
 | MaritalStatus | Married | Single | Divorced | - | - |
 | LoanPurpose | Auto | Home | Other | Education | Business |
 
-- Step 10 : A bar chart was also added to the report design area representing the number of satisfied & neutral/unsatisfied customers. While creating this visual, field named "Gender" was also added to the Legends bucket, thus number of customers are also seggregated according the gender. 
+- Step 10 : Feature Engineering. Create Age_groups, Income_Bracket, and year to transform numerical to categorical for future analysis
+
+			//Create Age_Groups column
+			ALTER TABLE loan_default_dataset ADD COLUMN Age_Groups VARCHAR(20);
+			UPDATE loan_default_dataset
+			SET Age_Groups = CASE
+			    WHEN Age <= 19 THEN 'Teen'
+			    WHEN Age <= 39 THEN 'Adults'
+			    WHEN Age <= 59 THEN 'Middle Age Adults'
+			    ELSE 'Senior Citizens'
+			  END;
+
+
+ 			 //Create Income_Bracket column
+			ALTER TABLE loan_default_dataset ADD COLUMN Income_Bracket VARCHAR(20);
+			UPDATE loan_default_dataset
+			SET Income_Bracket = CASE
+			    WHEN Income < 30000 THEN 'Low Income'
+			    WHEN Income >= 30000 AND Income < 60000 THEN 'Medium Income'
+			    WHEN Income >= 60000 THEN 'High Income'
+			  END;
+
+
+			  //create year column
+			ALTER TABLE loan_default_dataset ADD COLUMN Loan_Year INT;
+			UPDATE loan_default_dataset
+			SET Loan_Year = YEAR(Loan_Date);
 - Step 11 : Ratings Visual was used to represent different ratings mentioned below,
 
 
