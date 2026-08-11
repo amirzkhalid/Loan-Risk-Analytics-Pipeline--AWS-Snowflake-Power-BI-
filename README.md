@@ -294,7 +294,11 @@ Categorical Inconsistency Checking Result
 			ALTER TABLE loan_default_dataset ADD COLUMN Loan_Year INT;
 			UPDATE loan_default_dataset
 			SET Loan_Year = YEAR(Loan_Date);
-- Step 11 : Ratings Visual was used to represent different ratings mentioned below,
+As the dataset is cleaned, we can move forward to the next step.
+
+- Step 11 : Open PowerBI service and create a new workspace by clicking on the workspace at the left pane, click on the "+New Item" then search for dataflow Gen2/Gen1 then Create a new file. In the power query, Click on Get data and choose snowflake.
+- Step 12 : In Connection Settings, key-in your server (to get your server, open snowflake and click on your account -> view account detail then copy your server URL. while you can check your warehouse at the top of snowflake pane (example: COMPUTE_WH). Your username and password is your snowflake username and password
+- Step 13 : Open PowerBI desktop then click get data, and choose workspace that has been created with dataflow.
 
 
 ## 📊 Dashboard Features
