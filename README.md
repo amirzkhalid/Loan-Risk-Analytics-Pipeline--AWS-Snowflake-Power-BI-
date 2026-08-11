@@ -237,7 +237,22 @@ It is structured as a **single denormalized table** for analytical purposes.
 			SELECT MIN(Loan_Date), MAX(Loan_Date)
 			FROM loan_default_dataset;
 
-           
+As A result: There is no any duplicates row and null values
+
+Numerical Inconsistency Checkin Result
+| Column Name        | Minimum | Maximum |
+|-------------------|------------|------------|
+| Age    | 18 | 69 |
+| Income   | 15000 | 149999 |
+| LoanAmount    | 5000 | 249999 |
+| CreditScore    | 300 | 849 |
+| MonthsEmployed    | 0 | 119 |
+| NumCreditLines    | 1 | 4 |
+| InterestRate    | 2.00 | 25.00 |
+| LoanTerm    | 12 | 60 |
+| DTIRatio    | 0.10 | 0.90 |
+| Loan_Default_Status    | 0 | 1 |
+
 - Step 10 : A bar chart was also added to the report design area representing the number of satisfied & neutral/unsatisfied customers. While creating this visual, field named "Gender" was also added to the Legends bucket, thus number of customers are also seggregated according the gender. 
 - Step 11 : Ratings Visual was used to represent different ratings mentioned below,
 
