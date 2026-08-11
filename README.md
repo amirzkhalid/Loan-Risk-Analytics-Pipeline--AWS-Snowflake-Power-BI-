@@ -91,6 +91,53 @@ It is structured as a **single denormalized table** for analytical purposes.
 
 ---
 
+### Steps followed 
+
+- Step 1 : Open AWS S3, Select local region, then Create a bucket and Upload dataset (Loan_Default) into it, dataset is a csv file.
+- Step 2 : Open AWS IAM, Go to Access Manager and choose Roles section, then create role, select trusted entity: AWS Account, Option: Require External ID,     Extermal ID: 00000.
+- Step 3 : For permission policies in IAM, choose AmazonS3FullyAccess, to ensure the third-part can access the S3, then give the role name as you wish. For me (Snowflake-Test-Role)
+- Step 4 : open Snowflake and run the syntax. Copy the Role Arn you had created and paste it into storage_aws_role_arn. give your bucket path into storage_allowed_locations.
+
+          create or replace storage integration s3_integration
+          type =  external_stage
+          storage_provider = 's3'
+          enabled = true
+          storage_aws_role_arn = 'Your Role Arn'
+          storage_allowed_locations = ('s3://your_bucket_name/')
+          comment = 'optional comment'
+- Step 5 : Once the previous syntax successfully run, we need to get the property value of STORAGE_AWS_IAM_USER_ARN and STORAGE_AWS_ECTERNAL_ID by running this syntax
+
+          //description integration object
+          desc integration s3_integration;
+- Step 6 : Open AWS IAM role and choose the role you had created, click on trust relationship and edit trust policy
+
+          {
+	          "Version": "2012-10-17",  //Don't change
+	           "Statement": [
+		            {
+			                "Effect": "Allow",    //Don't change
+			                "Principal": {
+		                    	"AWS": "STORAGE_AWS_IAM_USER_ARN_"    //Get it from Snowflake
+	                		},
+		                	"Action": "sts:AssumeRole",     //Don't change
+		                	"Condition": {
+			                  	"StringEquals": {
+			                      		"sts:ExternalId": "STORAGE_AWS_ECTERNAL_ID" //Get it from Snowflake
+		                  		}
+	                		}
+              		}
+              	]
+            }
+- Step 7 : Since the data contains various ratings, thus in order to represent ratings, a new visual was added using the three ellipses in the visualizations pane in report view. 
+- Step 8 : Visual filters (Slicers) were added for four fields named "Class", "Customer Type", "Gate Location" & "Type of travel".
+- Step 9 : Two card visuals were added to the canvas, one representing average departure delay in minutes & other representing average arrival delay in minutes.
+           Using visual level filter from the filters pane, basic filtering was used & null values were unselected for consideration into average calculation.
+           
+           Although, by default, while calculating average, blank values are ignored.
+- Step 10 : A bar chart was also added to the report design area representing the number of satisfied & neutral/unsatisfied customers. While creating this visual, field named "Gender" was also added to the Legends bucket, thus number of customers are also seggregated according the gender. 
+- Step 11 : Ratings Visual was used to represent different ratings mentioned below,
+
+
 ## 📊 Dashboard Features
 
 ### 1. Loan Default & Overview
