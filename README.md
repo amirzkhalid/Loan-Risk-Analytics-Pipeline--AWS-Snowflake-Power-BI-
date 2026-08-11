@@ -239,7 +239,7 @@ It is structured as a **single denormalized table** for analytical purposes.
 
 As A result: There is no any duplicates row and null values
 
-Numerical Inconsistency Checkin Result
+Numerical and Date Inconsistency Checkin Result
 | Column Name        | Minimum | Maximum |
 |-------------------|------------|------------|
 | Age    | 18 | 69 |
@@ -252,6 +252,18 @@ Numerical Inconsistency Checkin Result
 | LoanTerm    | 12 | 60 |
 | DTIRatio    | 0.10 | 0.90 |
 | Loan_Default_Status    | 0 | 1 |
+| Loan_Date | 2013-01-01 | 2018-12-31 |
+
+Categorical Inconsistency Checking Result
+| Column Name        | Category 1 | Category 2 | Category 3 | Category 4 | Category 5 |
+|-------------------|------------|------------|------------|------------|------------|
+| HasMortgage | No | Yes | - | - | - |
+| HasDependents | No | Yes | - | - | - |
+| HasCoSigner | No | Yes |  - | - | - |
+| Education | High School | Bachelor's | Master's | PhD | - |
+| EmploymentType | Unemployed | Part-time | Self-employed | Full-time | - |
+| MaritalStatus | Married | Single | Divorced | - | - |
+| LoanPurpose | Auto | Home | Other | Education | Business |
 
 - Step 10 : A bar chart was also added to the report design area representing the number of satisfied & neutral/unsatisfied customers. While creating this visual, field named "Gender" was also added to the Legends bucket, thus number of customers are also seggregated according the gender. 
 - Step 11 : Ratings Visual was used to represent different ratings mentioned below,
