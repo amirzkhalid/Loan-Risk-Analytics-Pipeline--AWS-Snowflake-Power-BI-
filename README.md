@@ -96,7 +96,7 @@ It is structured as a **single denormalized table** for analytical purposes.
 - Step 1 : Open AWS S3, Select local region, then Create a bucket and Upload dataset (Loan_Default) into it, dataset is a csv file.
 - Step 2 : Open AWS IAM, Go to Access Manager and choose Roles section, then create role, select trusted entity: AWS Account, Option: Require External ID,     Extermal ID: 00000.
 - Step 3 : For permission policies in IAM, choose AmazonS3FullyAccess, to ensure the third-part can access the S3, then give the role name as you wish. For me (Snowflake-Test-Role)
-- Step 4 : open Snowflake and run the syntax. Copy the Role Arn you had created and paste it into storage_aws_role_arn. give your bucket path into storage_allowed_locations.
+- Step 4 : open Snowflake add new workspace and run the syntax. Copy the Role Arn you had created and paste it into storage_aws_role_arn in the syntax. give your bucket path into storage_allowed_locations.
 
           create or replace storage integration s3_integration
           type =  external_stage
@@ -128,12 +128,116 @@ It is structured as a **single denormalized table** for analytical purposes.
               		}
               	]
             }
-- Step 7 : Since the data contains various ratings, thus in order to represent ratings, a new visual was added using the three ellipses in the visualizations pane in report view. 
-- Step 8 : Visual filters (Slicers) were added for four fields named "Class", "Customer Type", "Gate Location" & "Type of travel".
-- Step 9 : Two card visuals were added to the canvas, one representing average departure delay in minutes & other representing average arrival delay in minutes.
-           Using visual level filter from the filters pane, basic filtering was used & null values were unselected for consideration into average calculation.
+- Step 7 : In Snowflake, create Database, Schema, and Table.
+
+			//Create Database
+			CREATE database Loan_Default;
+
+
+			//Create Schema
+			create schema Loan_Default_Data;
+
+
+			//Create Table
+			CREATE OR REPLACE TABLE loan_default_dataset (
+   			LoanID STRING,
+    		Age INT,
+    		Income INT,
+    		LoanAmount INT,
+    		CreditScore INT,
+    		MonthsEmployed INT,
+    		NumCreditLines INT,
+    		InterestRate NUMBER(5,2),
+    		LoanTerm INT,
+    		DTIRatio NUMBER(4,2),
+    		Education STRING,
+    		EmploymentType STRING,
+    		MaritalStatus STRING,
+    		HasMortgage STRING,
+    		HasDependents STRING,
+    		LoanPurpose STRING,
+    		HasCoSigner STRING,
+    		Default INT,
+    		Loan_Date DATE
+			);
+- Step 8 : Format the csv file and create stage before copying it into table
+
+			//Formatting CSV file
+ 			CREATE OR REPLACE FILE FORMAT loan_default_csv_format
+  			TYPE = 'CSV'
+  			FIELD_DELIMITER = ','
+  			SKIP_HEADER = 1
+  			NULL_IF = ('NULL', 'null', '')
+  			EMPTY_FIELD_AS_NULL = TRUE;
+
+
+			//Creating Stage to hold the link of S3 bucket
+			CREATE OR REPLACE STAGE Loan_Default_Stage
+			  URL = 's3://projectpowerbipunya'
+			  STORAGE_INTEGRATION = s3_integration
+			  FILE_FORMAT = loan_default_csv_format;
+
+
+			//Chceking Files in the bucket
+			LIST @Loan_Default_Stage;
+
+
+			//Copy the dataset into created table
+			COPY INTO loan_default_dataset
+			FROM @Loan_Default_Stage
+			FILES = ('Loan_default.csv')
+			FILE_FORMAT = (FORMAT_NAME = loan_default_csv_format)
+			ON_ERROR = 'CONTINUE';
+- Step 9 : Do data cleaning to ensure the data is cleaned before connecting to dataflow in PowerBi Service. However, the "Default" column name should be changes to prevent syntax issue. In this part, we need to check for duplicate values, Null values, and data inconsistency for numerical, categorical, and date
+			
+			//Duplicate Cheking
+			SELECT *, COUNT(*) AS cnt
+			FROM loan_default_dataset
+			GROUP BY ALL
+			HAVING COUNT(*) > 1;
+
+
+			//Null Checking
+			SELECT *
+			FROM loan_default_dataset
+				WHERE LoanID IS NULL OR Age IS NULL OR Income IS NULL OR LoanAmount IS NULL
+   				OR CreditScore IS NULL OR MonthsEmployed IS NULL OR NumCreditLines IS NULL
+   				OR InterestRate IS NULL OR LoanTerm IS NULL OR DTIRatio IS NULL
+   				OR Education IS NULL OR EmploymentType IS NULL OR MaritalStatus IS NULL
+   				OR HasMortgage IS NULL OR HasDependents IS NULL OR LoanPurpose IS NULL
+  				OR HasCoSigner IS NULL OR Loan_Default_Status IS NULL OR Loan_Date IS NULL;
+
+
+			//Numerical Inconsistency Checking
+			SELECT
+	  			MIN(Age) AS min_age, MAX(Age) AS max_age,
+  				MIN(Income) AS min_income, MAX(Income) AS max_income,
+  				MIN(LoanAmount) AS min_loanamount, MAX(LoanAmount) AS max_loanamount,
+  				MIN(CreditScore) AS min_creditscore, MAX(CreditScore) AS max_creditscore,
+  				MIN(MonthsEmployed) AS min_monthsemployed, MAX(MonthsEmployed) AS max_monthsemployed,
+  				MIN(NumCreditLines) AS min_numcreditlines, MAX(NumCreditLines) AS max_numcreditlines,
+  				MIN(InterestRate) AS min_interestrate, MAX(InterestRate) AS max_interestrate,
+  				MIN(LoanTerm) AS min_loanterm, MAX(LoanTerm) AS max_loanterm,
+  				MIN(DTIRatio) AS min_dtiratio, MAX(DTIRatio) AS max_dtiratio,
+  				MIN(Loan_Default_Status) AS min_default, MAX(Loan_Default_Status) AS max_default
+			FROM loan_default_dataset;
+
+
+			//Catogarical Inconsistency Checking
+			SELECT DISTINCT HasMortgage FROM loan_default_dataset;
+			SELECT DISTINCT HasDependents FROM loan_default_dataset;
+			SELECT DISTINCT HasCoSigner FROM loan_default_dataset;
+			SELECT DISTINCT Education FROM loan_default_dataset;
+			SELECT DISTINCT EmploymentType FROM loan_default_dataset;
+			SELECT DISTINCT MaritalStatus FROM loan_default_dataset;
+			SELECT DISTINCT LoanPurpose FROM loan_default_dataset;
+
+
+			//Date Inconsistency Checking
+			SELECT MIN(Loan_Date), MAX(Loan_Date)
+			FROM loan_default_dataset;
+
            
-           Although, by default, while calculating average, blank values are ignored.
 - Step 10 : A bar chart was also added to the report design area representing the number of satisfied & neutral/unsatisfied customers. While creating this visual, field named "Gender" was also added to the Legends bucket, thus number of customers are also seggregated according the gender. 
 - Step 11 : Ratings Visual was used to represent different ratings mentioned below,
 
