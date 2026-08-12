@@ -4,13 +4,13 @@ Designed a modern data stack (AWS, Snowflake, Power BI) to deliver scalable loan
 ---
 
 ## 📌 Problem Statement
-Financial institutions face challenges in identifying high-risk borrowers and understanding loan default patterns.
+Financial institutions face significant capital losses when borrowers default on their loans. Currently, loan applicant data is siloed and unprocessed, making it difficult to assess credit risks effectively. Without a centralized and automated end-to-end data pipeline, management lacks the real-time visibility and advanced analytical metrics needed to identify high-risk borrowers early and mitigate financial exposure.
 
 This project aims to:
-- Analyze loan distribution across demographics
-- Identify factors contributing to loan defaults
-- Provide insights into financial risk trends
-- Enable data-driven decision making
+- Build a Secure and Automated Data Pipeline
+- To Enrich Data Quality for Deeper Analytical Insights
+- To Establish a Single Source of Truth via Power BI Dataflow
+- Deliver Actionable Insights with Interactive Dashboards
 
 ---
 
