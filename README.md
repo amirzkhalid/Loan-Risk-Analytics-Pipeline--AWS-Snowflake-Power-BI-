@@ -1,5 +1,7 @@
 # Loan-Risk-Analytics-Pipeline--AWS-Snowflake-Power-BI-
-Designed a modern data stack (AWS, Snowflake, Power BI) to deliver scalable loan default analytics and risk insights.
+-Designed a modern data stack (AWS, Snowflake, Power BI) to deliver scalable loan default analytics and risk insights.
+
+-**Disclaimer**: This is a synthetic dataset, as this dataset was used for practical purpose. So, the dashboard's insight may not be applied in real world cases
 
 ---
 
@@ -328,10 +330,20 @@ As the dataset is cleaned, we can move forward to the next step.
 ---
 
 ## 📈 Key Insights
-- Unemployed individuals have the highest default rate
-- Full-time employees show lower risk
-- Adults take the highest loan amounts
-- Default trends fluctuate over time
+
+**Employment type is the clearest default-risk driver.** Default rate ranks cleanly by employment stability: Unemployed (3.39%) > Part-time (3.01%) > Self-employed (2.86%) > Full-time (2.36%). This is the most consistent risk signal in the dataset.
+
+**Loan sizing doesn't scale with creditworthiness.** Median loan amount actually decreases as credit score improves, Low (128,397) down to High (127,149). Borrowers with better credit aren't receiving larger loans, suggesting loan amount isn't being risk-adjusted by credit score.
+
+**Loan volume is concentrated in medium-to-high credit borrowers, despite no size advantage.** By total volume, Medium (4.6bn) and High (4.5bn) credit score bins carry the bulk of the loan book, versus Low (1.1bn), most of the portfolio sits with medium/high-credit borrowers even though their average loan size isn't any higher.
+
+**Default rate has no year-over-year trend.** Across 2013–2018, default rate stays in a tight 11.5%–11.75% band, with a temporary rise in 2015–2016. On its own, year isn't a useful predictor of default risk.
+
+**Loan growth and default growth move together.** YoY loan amount and YoY default amount rise and fall in the same years (both dip in 2014, both rise in 2015, both dip in 2017), expansion years bring proportionally more defaults along with more lending.
+
+**High-income borrowers dominate the loan book, but employment type doesn't differentiate within that group.** The High Income bracket accounts for 21.73bn of 32.58bn total loan sum (67%), split almost evenly across Full-time, Part-time, and Self-employed (~5.44bn each).
+
+**Mortgage and dependents status has no effect on loan amount.** Loan amounts are flat (3.1bn) regardless of whether a borrower has a mortgage or dependents, making this a weak segmentation variable for loan sizing.
 
 ---
 
